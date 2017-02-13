@@ -1,5 +1,177 @@
 # this file contains all the facts, just so for reference. 
 # Note, PresidentFacts.py DOES NOT draw from this folder
+"""
+President Facts Lambda Function
+
+Created by Zac Patel on 2/12/17
+
+Code skeleton taken from Lambda python template
+
+Facts compiled by Anil Patel on 2/12/17
+"""
+
+from __future__ import print_function
+from random import randint
+# --------------- Helpers that build all of the responses ----------------------
+
+def get_fact_intent_handler(intent):
+    """
+    grabs a random fact from the list of facts, and returns it to the user
+    """
+    # finding the index of the fact to get, and pulling it from the list
+    rand = randint(0, len(FACTS_ARRAY) - 1)
+    fact = FACTS_ARRAY[rand]
+
+    # session attributes remain empty
+    session_attributes = {}
+    # getting a fact should end the session
+    should_end_session = False
+    # no reprompt text because the session should end after a single fact is returned
+    reprompt_text = ""
+    # the title displayed on the phone app
+    title = "President Fact #" + str(rand + 1)
+    
+    # generating our speechlet response
+    sp_res = build_speechlet_response(title, fact, reprompt_text, should_end_session)
+    return build_response(session_attributes, sp_res)
+
+def build_speechlet_response(title, output, reprompt_text, should_end_session):
+    return {
+        'outputSpeech': {
+            'type': 'PlainText',
+            'text': output
+        },
+        'card': {
+            'type': 'Simple',
+            'title': title,
+            'content': output
+        },
+        'reprompt': {
+            'outputSpeech': {
+                'type': 'PlainText',
+                'text': reprompt_text
+            }
+        },
+        'shouldEndSession': should_end_session
+    }
+
+
+def build_response(session_attributes, speechlet_response):
+    return {
+        'version': '1.0',
+        'sessionAttributes': session_attributes,
+        'response': speechlet_response
+    }
+
+
+# --------------- Functions that control the skill's behavior ------------------
+
+def get_welcome_response():
+    """ If we wanted to initialize the session to have some attributes we could
+    add those here
+    """
+
+    session_attributes = {}
+    card_title = "Welcome"
+    speech_output = "Welcome to President Facts. Ask me for a fact."
+    # If the user either does not reply to the welcome message or says something
+    # that is not understood, they will be prompted again with this text.
+    reprompt_text = "I know " + str(len(FACTS_ARRAY)) + " facts about the US Presidents."
+    should_end_session = False
+    return build_response(session_attributes, build_speechlet_response(
+        card_title, speech_output, reprompt_text, should_end_session))
+
+
+def handle_session_end_request():
+    card_title = "Session Ended"
+    speech_output = "Thanks for using President facts."
+    # Setting this to true ends the session and exits the skill.
+    should_end_session = True
+    return build_response({}, build_speechlet_response(
+        card_title, speech_output, None, should_end_session))
+
+
+# --------------- Events ------------------
+
+def on_session_started(session_started_request, session):
+    """ Called when the session starts """
+
+    print("on_session_started requestId=" + session_started_request['requestId']
+          + ", sessionId=" + session['sessionId'])
+
+
+def on_launch(launch_request, session):
+    """ Called when the user launches the skill without specifying what they
+    want
+    """
+
+    print("on_launch requestId=" + launch_request['requestId'] +
+          ", sessionId=" + session['sessionId'])
+    # Dispatch to your skill's launch
+    return get_welcome_response()
+
+
+def on_intent(intent_request, session):
+    """ Called when the user specifies an intent for this skill """
+
+    print("on_intent requestId=" + intent_request['requestId'] +
+          ", sessionId=" + session['sessionId'])
+
+    intent = intent_request['intent']
+    intent_name = intent_request['intent']['name']
+
+    # Dispatch to your skill's intent handlers
+    if intent_name == "GETFACTINTENT":
+        return get_fact_intent_handler(intent)
+    elif intent_name == "AMAZON.HelpIntent":
+        return get_welcome_response()
+    elif intent_name == "AMAZON.CancelIntent" or intent_name == "AMAZON.StopIntent":
+        return handle_session_end_request()
+    else:
+        raise ValueError("Invalid intent")
+
+
+def on_session_ended(session_ended_request, session):
+    """ Called when the user ends the session.
+
+    Is not called when the skill returns should_end_session=true
+    """
+    print("on_session_ended requestId=" + session_ended_request['requestId'] +
+          ", sessionId=" + session['sessionId'])
+    # add cleanup logic here
+
+
+# --------------- Main handler ------------------
+
+def lambda_handler(event, context):
+    """ Route the incoming request based on type (LaunchRequest, IntentRequest,
+    etc.) The JSON body of the request is provided in the event parameter.
+    """
+    print("event.session.application.applicationId=" +
+          event['session']['application']['applicationId'])
+
+    """
+    Uncomment this if statement and populate with your skill's application ID to
+    prevent someone else from configuring a skill that sends requests to this
+    function.
+    """
+    if (event['session']['application']['applicationId'] !=
+            "amzn1.ask.skill.581772f0-8226-4dd9-b73d-15597f171ebb"):
+        raise ValueError("Invalid Application ID")
+
+    if event['session']['new']:
+        on_session_started({'requestId': event['request']['requestId']},
+                           event['session'])
+    if event['request']['type'] == "LaunchRequest":
+        return on_launch(event['request'], event['session'])
+    elif event['request']['type'] == "IntentRequest":
+        return on_intent(event['request'], event['session'])
+    elif event['request']['type'] == "SessionEndedRequest":
+        return on_session_ended(event['request'], event['session'])
+
+# Array to hold all our facts
+# storing all our facts in an array is just generally less of a hassle than a text file
+# (though facts are stored in their formatted form in Facts.docx for spellcheck purposes)
 FACTS_ARRAY=[
     "George Washington was unanimously elected by the Electoral College to his first two terms as president.",
     "George Washington defeated the British Army in the battles of Trenton and Princeton after crossing the Deleware River in the middle of winter.",
@@ -20,6 +192,7 @@ FACTS_ARRAY=[
     "Andrew Jackson denied the right of South Carolina to secede from the Union over the Tarriff of Abominations, a treaty designed to protect industry in the northern United States.",
     "Andrew Jackson is the founder of the Democratic Party.",
     "Martin Van Buren was blamed for the depression of 1837.  Newspapers at the time labeled him as Martin Van Ruin.",
+    "After losing reelection in 1840, Martin van Buren ran unsuccessfully under the abolotionist Free Soil party.",
     "Martin Van Buren denied the application of Texas for admission to the Union.",
     "William Henry Harrison, who was 68 years old at the time of his innaguration, died 31 days into his presidency, making his term the shortest in United States history.",
     "John Tyler firmly believed in territorial expansion  and is most notably known for the annexation of the independent Republic of Texas.",
@@ -41,7 +214,7 @@ FACTS_ARRAY=[
     "Benjamin Harrison was the grandson of William Henry Harrison making them the only grandfather-grandson duo to become President.",
     "William McKinley led the United States to victory in the Spanish-American War.",
     "William McKinley was shot on September 6, 1901 by Leon Czolgosz and died eight days later.",
-    "Theodore Roosevelt gained office after William McKinley's assasination.  At age 42, he was the youngest United States President in history.",
+    "Theodore Roosevelt gained office after William McKinley's assasinatin.  At age 42, he was the youngest United States President in history.",
     "Theodore Roosevelt overcame debilitating astma through a strenous lifestyle.",
     "Theodore Roosevelt's face is carved into Mount Rushmore.",
     "William Howard Taft focused on East Asian affairs more than European affairs.  He also propped up or removed several Latin American governments.",
@@ -102,4 +275,5 @@ FACTS_ARRAY=[
     "Donald Trump is the first President without prior military or governmental service",
     "Donald Trump's platform emphasizes renegotiation of the North American Free Trade Agreement.",
 ]
+
 

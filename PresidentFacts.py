@@ -41,8 +41,8 @@ def build_speechlet_response(title, output, reprompt_text, should_end_session):
         },
         'card': {
             'type': 'Simple',
-            'title': "SessionSpeechlet - " + title,
-            'content': "SessionSpeechlet - " + output
+            'title': title,
+            'content': output
         },
         'reprompt': {
             'outputSpeech': {
@@ -153,14 +153,13 @@ def lambda_handler(event, context):
     prevent someone else from configuring a skill that sends requests to this
     function.
     """
-    # if (event['session']['application']['applicationId'] !=
-    #         "amzn1.echo-sdk-ams.app.[unique-value-here]"):
-    #     raise ValueError("Invalid Application ID")
+    if (event['session']['application']['applicationId'] !=
+            "amzn1.ask.skill.581772f0-8226-4dd9-b73d-15597f171ebb"):
+        raise ValueError("Invalid Application ID")
 
     if event['session']['new']:
         on_session_started({'requestId': event['request']['requestId']},
                            event['session'])
-
     if event['request']['type'] == "LaunchRequest":
         return on_launch(event['request'], event['session'])
     elif event['request']['type'] == "IntentRequest":
@@ -191,6 +190,7 @@ FACTS_ARRAY=[
     "Andrew Jackson denied the right of South Carolina to secede from the Union over the Tarriff of Abominations, a treaty designed to protect industry in the northern United States.",
     "Andrew Jackson is the founder of the Democratic Party.",
     "Martin Van Buren was blamed for the depression of 1837.  Newspapers at the time labeled him as Martin Van Ruin.",
+    "After losing reelection in 1840, Martin van Buren ran unsuccessfully under the abolotionist Free Soil party.",
     "Martin Van Buren denied the application of Texas for admission to the Union.",
     "William Henry Harrison, who was 68 years old at the time of his innaguration, died 31 days into his presidency, making his term the shortest in United States history.",
     "John Tyler firmly believed in territorial expansion  and is most notably known for the annexation of the independent Republic of Texas.",
