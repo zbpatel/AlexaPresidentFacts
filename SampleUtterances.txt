@@ -1,0 +1,83 @@
+GETFACTINTENT give a fact
+GETFACTINTENT give me a fact
+GETFACTINTENT give me a President fact
+GETFACTINTENT give me a Presidents fact
+GETFACTINTENT give me a presidential fact
+GETFACTINTENT give me a US President fact
+GETFACTINTENT give me an American President fact
+GETFACTINTENT give me a fact about US Presidents
+GETFACTINTENT give me a fact about American Presidents
+GETFACTINTENT give me a fact about a US President
+GETFACTINTENT give me a fact about an American President
+GETFACTINTENT give me a fact about a President
+GETFACTINTENT teach a fact
+GETFACTINTENT teach me a fact
+GETFACTINTENT teach me a President fact
+GETFACTINTENT teach me a Presidents fact
+GETFACTINTENT teach me a presidential fact
+GETFACTINTENT teach me a US President fact
+GETFACTINTENT teach me an American President fact
+GETFACTINTENT teach me a fact about US Presidents
+GETFACTINTENT teach me a fact about American Presidents
+GETFACTINTENT teach me a fact about a US President
+GETFACTINTENT teach me a fact about an American President
+GETFACTINTENT teach me a fact about a President
+GETFACTINTENT tell a fact
+GETFACTINTENT tell me a fact
+GETFACTINTENT tell me a President fact
+GETFACTINTENT tell me a Presidents fact
+GETFACTINTENT tell me a presidential fact
+GETFACTINTENT tell me a US President fact
+GETFACTINTENT tell me an American President fact
+GETFACTINTENT tell me a fact about US Presidents
+GETFACTINTENT tell me a fact about American Presidents
+GETFACTINTENT tell me a fact about a US President
+GETFACTINTENT tell me a fact about an American President
+GETFACTINTENT tell me a fact about a President
+GETFACTINTENT tell a fact
+GETFACTINTENT tell a President fact
+GETFACTINTENT tell a Presidents fact
+GETFACTINTENT tell a presidential fact
+GETFACTINTENT tell a US President fact
+GETFACTINTENT tell an American President fact
+GETFACTINTENT tell a fact about US Presidents
+GETFACTINTENT tell a fact about American Presidents
+GETFACTINTENT tell a fact about a US President
+GETFACTINTENT tell a fact about an American President
+GETFACTINTENT tell a fact about a President
+GETFACTINTENT say a fact
+GETFACTINTENT say a President fact
+GETFACTINTENT say a Presidents fact
+GETFACTINTENT say a presidential fact
+GETFACTINTENT say a US President fact
+GETFACTINTENT say an American President fact
+GETFACTINTENT say a fact about US Presidents
+GETFACTINTENT say a fact about American Presidents
+GETFACTINTENT say a fact about a US President
+GETFACTINTENT say a fact about an American President
+GETFACTINTENT say a fact about a President
+GETFACTINTENT find a fact
+GETFACTINTENT find a President fact
+GETFACTINTENT find a Presidents fact
+GETFACTINTENT find a presidential fact
+GETFACTINTENT find a US President fact
+GETFACTINTENT find an American President fact
+GETFACTINTENT find a fact about US Presidents
+GETFACTINTENT find a fact about American Presidents
+GETFACTINTENT find a fact about a US President
+GETFACTINTENT find a fact about an American President
+GETFACTINTENT find a fact about a President
+GETFACTINTENT read a fact
+GETFACTINTENT read a President fact
+GETFACTINTENT read a Presidents fact
+GETFACTINTENT read a presidential fact
+GETFACTINTENT read a US President fact
+GETFACTINTENT read an American President fact
+GETFACTINTENT read a fact about US Presidents
+GETFACTINTENT read a fact about American Presidents
+GETFACTINTENT read a fact about a US President
+GETFACTINTENT read a fact about an American President
+GETFACTINTENT read a fact about a President
+GETFACTINTENT for a fact
+GETFACTINTENT a fact
+GETFACTINTENT fact
